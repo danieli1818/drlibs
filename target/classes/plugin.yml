@@ -1,0 +1,5 @@
+name: DRLibs
+version: ${project.version}
+main: drlibs.DRLibs
+authors: [DanielRottner]
+description: DRLibs Plugin library for plugins.
