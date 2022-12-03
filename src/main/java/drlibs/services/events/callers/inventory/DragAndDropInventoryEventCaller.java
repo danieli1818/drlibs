@@ -34,8 +34,7 @@ public class DragAndDropInventoryEventCaller extends EventCallerService implemen
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)
-	public void onInventoryClickEvent(InventoryClickEvent event) { // TODO Take care of the case of double click and swap hotbar by number clicking items
-//		printEvent(event);
+	public void onInventoryClickEvent(InventoryClickEvent event) {
 		if (event.isCancelled() || event.isShiftClick() || event.getClick() == ClickType.CREATIVE) { // Don't run if event is cancelled or shift clicked or clicked in creative mode
 			return;
 		}
@@ -47,10 +46,9 @@ public class DragAndDropInventoryEventCaller extends EventCallerService implemen
 				setStartDragPlayerEvent(player, event);
 				return;
 			}
-			if (!isEventActionPlace(event)) {
+			if (!isEventActionPlace(event)) { // TODO Add handling to drop action when the player clicks outside the inventory
 				return;
 			}
-//			System.out.println("Player done dragging item!" + event.getCurrentItem().getType());
 			InventoryClickEvent startDragPlayerEvent = removeStartDragPlayerEvent(player);
 			Bukkit.getPluginManager().callEvent(new DragAndDropInventoryEvent(startDragPlayerEvent, event));
 		} else {

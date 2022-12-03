@@ -1,4 +1,4 @@
-package drlibs.events.inventory;
+package drlibs.events.inventory.moveitemtootherinventory;
 
 import java.util.Map;
 
@@ -51,16 +51,12 @@ public class MoveItemToOtherInventoryEvent extends Event implements Cancellable 
 		return slotsAmountsAfter;
 	}
 
-	public int getFromSlotAmountAfter() {
-		return getSlotsAmountsAfter().getFromSlotAmount();
+	public Map<Integer, Integer> getFromInventorySlotsAmountsAfter() {
+		return getSlotsAmountsAfter().getFromInventorySlotsAmounts();
 	}
 
-	public Map<Integer, Integer> getToSlotsAmounts() {
-		return slotsAmountsAfter.getToSlotsAmounts();
-	}
-
-	public int getToSlotsCount() {
-		return getToSlotsAmounts().size();
+	public Map<Integer, Integer> getToInventorySlotsAmounts() {
+		return slotsAmountsAfter.getToInventorySlotsAmounts();
 	}
 
 	public ItemStack getItemStack() {
@@ -78,27 +74,7 @@ public class MoveItemToOtherInventoryEvent extends Event implements Cancellable 
 	@Override
 	public String toString() {
 		return "Clicked slot and item: " + getFromSlot() + ", " + getItemStack()
-				+ "\nTo slots from slot and new slots: " + getFromSlotAmountAfter() + ", " + getToSlotsAmounts();
-	}
-
-	public static class SlotsAmounts {
-
-		private int fromSlotAmount;
-		private Map<Integer, Integer> toSlotsAmounts;
-
-		public SlotsAmounts(int fromSlotAmount, Map<Integer, Integer> toSlotsAmounts) {
-			this.fromSlotAmount = fromSlotAmount;
-			this.toSlotsAmounts = toSlotsAmounts;
-		}
-
-		public int getFromSlotAmount() {
-			return fromSlotAmount;
-		}
-
-		public Map<Integer, Integer> getToSlotsAmounts() {
-			return toSlotsAmounts;
-		}
-
+				+ "\nSlots amounts from:" + getFromInventorySlotsAmountsAfter() + ", to:" + getToInventorySlotsAmounts();
 	}
 
 	@Override
