@@ -1,12 +1,20 @@
 package drlibs.common.files;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.ItemStack;
+import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
@@ -81,6 +89,26 @@ public class FileConfigurationsUtils {
 		return fileConfiguration.getItemStack(valuePath);
 	}
 	
+	public Serializable getSerializable(String filePath, String valuePath) throws ClassNotFoundException {
+		FileConfiguration fileConfiguration = getFileConfiguration(filePath);
+		if (fileConfiguration == null) {
+			return null;
+		}
+		String data = fileConfiguration.getString(valuePath);
+		if (data == null) {
+			return null;
+		}
+		try {
+			Object object = new ObjectInputStream(new ByteArrayInputStream(Base64Coder.decodeLines(data))).readObject();
+			if (object == null || !(object instanceof Serializable)) {
+				return null;
+			}
+			return (Serializable) object;
+		} catch (IOException e) {
+			return null;
+		}
+	}
+	
 	public boolean removeObject(String filePath, String valuePath) {
 		FileConfiguration fileConfiguration = getFileConfiguration(filePath);
 		if (fileConfiguration == null) {
@@ -119,6 +147,15 @@ public class FileConfigurationsUtils {
 		fileConfiguration.set(valuePath, value);
 	}
 	
+	public void setSerializable(String filePath, String valuePath, Serializable value) throws IOException {
+		FileConfiguration fileConfiguration = getFileConfiguration(filePath);
+		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+		ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
+		objectOutputStream.writeObject(value);
+		objectOutputStream.close();
+		fileConfiguration.set(valuePath, Base64Coder.encodeLines(outputStream.toByteArray()));
+	}
+	
 	public boolean save(String filePath) {
 		return loader.saveFileConfiguration(filePath);
 	}
@@ -126,6 +163,11 @@ public class FileConfigurationsUtils {
 	public boolean hasKey(String filePath, String key) {
 		FileConfiguration fileConfiguration = loader.getFileConfiguration(filePath);
 		return fileConfiguration.getKeys(false).contains(key);
+	}
+	
+	public Set<String> getKeys(String filePath) {
+		FileConfiguration fileConfiguration = loader.getFileConfiguration(filePath);
+		return fileConfiguration.getKeys(false);
 	}
 	
 	private FileConfiguration getFileConfiguration(String filePath) {

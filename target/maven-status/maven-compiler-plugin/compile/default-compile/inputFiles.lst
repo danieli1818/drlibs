@@ -24,7 +24,9 @@ C:\Users\USER\eclipse-workspace\drlibs\src\main\java\drlibs\utils\parsers\ItemSt
 C:\Users\USER\eclipse-workspace\drlibs\src\main\java\drlibs\services\Service.java
 C:\Users\USER\eclipse-workspace\drlibs\src\main\java\drlibs\services\events\callers\inventory\moveitemtootherinventory\SlotsProcessor.java
 C:\Users\USER\eclipse-workspace\drlibs\src\main\java\drlibs\utils\messages\MessagesStorage.java
+C:\Users\USER\eclipse-workspace\drlibs\src\main\java\drlibs\input\PlayerInput.java
 C:\Users\USER\eclipse-workspace\drlibs\src\main\java\drlibs\events\inventory\DragAndDropInventoryEvent.java
+C:\Users\USER\eclipse-workspace\drlibs\src\main\java\drlibs\services\input\InputService.java
 C:\Users\USER\eclipse-workspace\drlibs\src\main\java\drlibs\services\events\callers\inventory\moveitemtootherinventory\MoveItemToOtherInventoryEventCallerBackup.java
 C:\Users\USER\eclipse-workspace\drlibs\src\main\java\drlibs\utils\functions\InventoriesUtils.java
 C:\Users\USER\eclipse-workspace\drlibs\src\main\java\drlibs\common\commands\AdvancedCommand.java
@@ -35,12 +37,15 @@ C:\Users\USER\eclipse-workspace\drlibs\src\main\java\drlibs\common\plugin\permis
 C:\Users\USER\eclipse-workspace\drlibs\src\main\java\drlibs\events\inventory\ItemSlotSwapEvent.java
 C:\Users\USER\eclipse-workspace\drlibs\src\main\java\drlibs\common\files\FileConfigurationsUtils.java
 C:\Users\USER\eclipse-workspace\drlibs\src\main\java\drlibs\services\events\callers\inventory\moveitemtootherinventory\MoveItemToOtherInventoryEventCaller.java
+C:\Users\USER\eclipse-workspace\drlibs\src\main\java\drlibs\items\ItemStackBuilder.java
 C:\Users\USER\eclipse-workspace\drlibs\src\main\java\drlibs\utils\messages\MessagesSender.java
 C:\Users\USER\eclipse-workspace\drlibs\src\main\java\drlibs\common\files\FileConfigurationsLoader.java
 C:\Users\USER\eclipse-workspace\drlibs\src\main\java\drlibs\utils\functions\ItemsUtils.java
 C:\Users\USER\eclipse-workspace\drlibs\src\main\java\drlibs\common\plugin\FilesPlugin.java
+C:\Users\USER\eclipse-workspace\drlibs\src\main\java\drlibs\input\ChatPlayerInput.java
 C:\Users\USER\eclipse-workspace\drlibs\src\main\java\drlibs\common\commands\SubCommand.java
 C:\Users\USER\eclipse-workspace\drlibs\src\main\java\drlibs\events\inventory\moveitemtootherinventory\MoveItemToOtherInventoryEvent.java
+C:\Users\USER\eclipse-workspace\drlibs\src\main\java\drlibs\input\BookPlayerInput.java
 C:\Users\USER\eclipse-workspace\drlibs\src\main\java\drlibs\services\events\callers\inventory\moveitemtootherinventory\Logic.java
 C:\Users\USER\eclipse-workspace\drlibs\src\main\java\drlibs\common\commands\ConsumerRootCommand.java
 C:\Users\USER\eclipse-workspace\drlibs\src\main\java\drlibs\utils\reloader\ReloaderManager.java
