@@ -7,7 +7,7 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
 // TODO Add cancel action to return the item back to the previous slot and if there is an item there put it in other slot or drop it to the ground
-public class DragAndDropInventoryEvent extends Event implements Cancellable {
+public class NormalDragAndDropInventoryEvent extends Event implements Cancellable {
 
 	private static final HandlerList HANDLERS = new HandlerList();
 
@@ -16,7 +16,7 @@ public class DragAndDropInventoryEvent extends Event implements Cancellable {
 
 	private boolean isCancelled;
 
-	public DragAndDropInventoryEvent(InventoryClickEvent startDragEvent, InventoryClickEvent dropEvent) {
+	public NormalDragAndDropInventoryEvent(InventoryClickEvent startDragEvent, InventoryClickEvent dropEvent) {
 		this.startDragEvent = startDragEvent;
 		this.dropEvent = dropEvent;
 		this.isCancelled = false;

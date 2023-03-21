@@ -9,6 +9,7 @@ C:\Users\USER\eclipse-workspace\drlibs\src\main\java\drlibs\services\events\call
 C:\Users\USER\eclipse-workspace\drlibs\src\main\java\drlibs\common\plugin\permissions\PermissionsPlugin.java
 C:\Users\USER\eclipse-workspace\drlibs\src\main\java\drlibs\utils\log\PluginLogger.java
 C:\Users\USER\eclipse-workspace\drlibs\src\main\java\drlibs\messages\BaseCommandsMessagesIDs.java
+C:\Users\USER\eclipse-workspace\drlibs\src\main\java\drlibs\events\inventory\NormalDragAndDropInventoryEvent.java
 C:\Users\USER\eclipse-workspace\drlibs\src\main\java\drlibs\common\plugin\permissions\functions\PermissionsFunctions.java
 C:\Users\USER\eclipse-workspace\drlibs\src\main\java\drlibs\DRLibs.java
 C:\Users\USER\eclipse-workspace\drlibs\src\main\java\drlibs\events\inventory\moveitemtootherinventory\SlotsAmounts.java
@@ -20,12 +21,12 @@ C:\Users\USER\eclipse-workspace\drlibs\src\main\java\drlibs\services\events\call
 C:\Users\USER\eclipse-workspace\drlibs\src\main\java\drlibs\common\commands\CommandTransformer.java
 C:\Users\USER\eclipse-workspace\drlibs\src\main\java\drlibs\exceptions\parse\ParseException.java
 C:\Users\USER\eclipse-workspace\drlibs\src\main\java\drlibs\services\BaseService.java
+C:\Users\USER\eclipse-workspace\drlibs\src\main\java\drlibs\events\inventory\DragInventoryDragAndDropInventoryEvent.java
 C:\Users\USER\eclipse-workspace\drlibs\src\main\java\drlibs\utils\parsers\ItemStackParser.java
 C:\Users\USER\eclipse-workspace\drlibs\src\main\java\drlibs\services\Service.java
 C:\Users\USER\eclipse-workspace\drlibs\src\main\java\drlibs\services\events\callers\inventory\moveitemtootherinventory\SlotsProcessor.java
 C:\Users\USER\eclipse-workspace\drlibs\src\main\java\drlibs\utils\messages\MessagesStorage.java
 C:\Users\USER\eclipse-workspace\drlibs\src\main\java\drlibs\input\PlayerInput.java
-C:\Users\USER\eclipse-workspace\drlibs\src\main\java\drlibs\events\inventory\DragAndDropInventoryEvent.java
 C:\Users\USER\eclipse-workspace\drlibs\src\main\java\drlibs\services\input\InputService.java
 C:\Users\USER\eclipse-workspace\drlibs\src\main\java\drlibs\services\events\callers\inventory\moveitemtootherinventory\MoveItemToOtherInventoryEventCallerBackup.java
 C:\Users\USER\eclipse-workspace\drlibs\src\main\java\drlibs\utils\functions\InventoriesUtils.java
@@ -45,7 +46,6 @@ C:\Users\USER\eclipse-workspace\drlibs\src\main\java\drlibs\common\plugin\FilesP
 C:\Users\USER\eclipse-workspace\drlibs\src\main\java\drlibs\input\ChatPlayerInput.java
 C:\Users\USER\eclipse-workspace\drlibs\src\main\java\drlibs\common\commands\SubCommand.java
 C:\Users\USER\eclipse-workspace\drlibs\src\main\java\drlibs\events\inventory\moveitemtootherinventory\MoveItemToOtherInventoryEvent.java
-C:\Users\USER\eclipse-workspace\drlibs\src\main\java\drlibs\input\BookPlayerInput.java
 C:\Users\USER\eclipse-workspace\drlibs\src\main\java\drlibs\services\events\callers\inventory\moveitemtootherinventory\Logic.java
 C:\Users\USER\eclipse-workspace\drlibs\src\main\java\drlibs\common\commands\ConsumerRootCommand.java
 C:\Users\USER\eclipse-workspace\drlibs\src\main\java\drlibs\utils\reloader\ReloaderManager.java

@@ -152,5 +152,42 @@ public class InventoriesUtils {
         }
         return type;
     }
+    
+    /**
+     * Parses raw slot to inventory slot
+     * @param inventoryView The InventoryView of the raw slot
+     * @param rawSlot The raw slot
+     * @return InventorySlotData of the inventory slot
+     */
+    public static InventorySlotData parseRawSlot(InventoryView inventoryView, int rawSlot) {
+    	int numOfTopSlots = inventoryView.getTopInventory().getSize();
+    	return new InventorySlotData(inventoryView, rawSlot < numOfTopSlots, inventoryView.convertSlot(rawSlot));
+    }
+    
+    public static class InventorySlotData {
+    	
+    	private InventoryView inventoryView;
+    	private boolean isTopInventory;
+    	private int slot; // No
+    	
+    	public InventorySlotData(InventoryView inventoryView, boolean isTopInventory, int slot) {
+    		this.inventoryView = inventoryView;
+    		this.isTopInventory = isTopInventory;
+    		this.slot = slot;
+		}
+    	
+    	public InventoryView getInventoryView() {
+			return inventoryView;
+		}
+    	
+    	public boolean isTopInventory() {
+			return isTopInventory;
+		}
+    	
+    	public int getSlot() {
+			return slot;
+		}
+    	
+    }
 	
 }
