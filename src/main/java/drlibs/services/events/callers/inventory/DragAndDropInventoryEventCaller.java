@@ -1,11 +1,14 @@
 package drlibs.services.events.callers.inventory;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -14,12 +17,13 @@ import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 
+import drlibs.events.inventory.DragAndDropInventoryEvent;
 import drlibs.events.inventory.DragInventoryDragAndDropInventoryEvent;
 import drlibs.events.inventory.NormalDragAndDropInventoryEvent;
 import drlibs.services.Service;
 import drlibs.services.events.callers.EventCallerService;
 
-public class DragAndDropInventoryEventCaller extends EventCallerService implements Service, Listener {
+public class DragAndDropInventoryEventCaller extends EventCallerService implements Service, Listener, PropertyChangeListener {
 
 	private static DragAndDropInventoryEventCaller instance = null;
 
@@ -56,14 +60,17 @@ public class DragAndDropInventoryEventCaller extends EventCallerService implemen
 																							// cursor to not remove the start drag player event for
 																							// place some too
 				removeStartDragPlayerEvent(player);
+				if (isEventActionPickup(event)) {
+					setStartDragPlayerEvent(player, event);
+				}
 				return;
 			}
 			InventoryClickEvent startDragPlayerEvent;
 			switch (event.getAction()) {
 			case SWAP_WITH_CURSOR:
 				startDragPlayerEvent = removeStartDragPlayerEvent(player);
-				Bukkit.getPluginManager().callEvent(new NormalDragAndDropInventoryEvent(startDragPlayerEvent, event));
 				setStartDragPlayerEvent(player, event);
+				callEvent(new NormalDragAndDropInventoryEvent(startDragPlayerEvent, event));
 				return;
 			case PLACE_ALL:
 			case PLACE_SOME: // See if there is a place like this and if needed move to act like the
@@ -71,7 +78,7 @@ public class DragAndDropInventoryEventCaller extends EventCallerService implemen
 			case DROP_ALL_CURSOR:
 			case DROP_ALL_SLOT:
 				startDragPlayerEvent = removeStartDragPlayerEvent(player);
-				Bukkit.getPluginManager().callEvent(new NormalDragAndDropInventoryEvent(startDragPlayerEvent, event));
+				callEvent(new NormalDragAndDropInventoryEvent(startDragPlayerEvent, event));
 				return;
 			case PLACE_ONE:
 			case DROP_ONE_CURSOR:
@@ -81,7 +88,7 @@ public class DragAndDropInventoryEventCaller extends EventCallerService implemen
 				} else {
 					startDragPlayerEvent = getStartDragPlayerEvent(player);
 				}
-				Bukkit.getPluginManager().callEvent(new NormalDragAndDropInventoryEvent(startDragPlayerEvent, event));
+				callEvent(new NormalDragAndDropInventoryEvent(startDragPlayerEvent, event));
 				return;
 			default:
 				return;
@@ -99,11 +106,11 @@ public class DragAndDropInventoryEventCaller extends EventCallerService implemen
 	public void onInventoryDragEvent(InventoryDragEvent event) {
 		printEvent(event);
 		if (event.getCursor() == null || event.getCursor().getType() == Material.AIR) {
-			Bukkit.getPluginManager().callEvent(new DragInventoryDragAndDropInventoryEvent(
+			callEvent(new DragInventoryDragAndDropInventoryEvent(
 					removeStartDragPlayerEvent((Player) event.getWhoClicked()), event));
 			return;
 		}
-		Bukkit.getPluginManager().callEvent(new DragInventoryDragAndDropInventoryEvent(
+		callEvent(new DragInventoryDragAndDropInventoryEvent(
 				getStartDragPlayerEvent((Player) event.getWhoClicked()), event));
 	}
 
@@ -174,6 +181,23 @@ public class DragAndDropInventoryEventCaller extends EventCallerService implemen
 
 	private InventoryClickEvent getStartDragPlayerEvent(Player player) {
 		return startDragPlayerEvents.get(player);
+	}
+	
+	private void callEvent(DragAndDropInventoryEvent event) {
+		event.addObserver(this);
+		Bukkit.getPluginManager().callEvent((Event) event);
+	}
+
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		if ("cancel".equals(evt.getPropertyName())) {
+			if (evt.getNewValue() instanceof Boolean && (boolean) evt.getNewValue()) {
+				DragAndDropInventoryEvent source = (DragAndDropInventoryEvent) evt.getSource();
+				Player player = source.getPlayer();
+				System.out.println("Setting start drag event with slot: " + source.getStartDragEvent().getSlot());
+				setStartDragPlayerEvent(player, source.getStartDragEvent());
+			}
+		}
 	}
 
 }

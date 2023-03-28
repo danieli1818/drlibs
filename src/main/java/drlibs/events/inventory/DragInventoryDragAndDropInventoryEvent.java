@@ -1,5 +1,8 @@
 package drlibs.events.inventory;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
@@ -7,8 +10,10 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 
-// TODO Add cancel action to return the item back to the previous slot and if there is an item there put it in other slot or drop it to the ground
-public class DragInventoryDragAndDropInventoryEvent extends Event implements Cancellable {
+import drlibs.common.general.interfaces.PropertyChangeObservable;
+
+// TODO Either add support to uncancel after canceling or to change the API to only allow to cancel without enabling uncanceling
+public class DragInventoryDragAndDropInventoryEvent extends Event implements Cancellable, PropertyChangeObservable, DragAndDropInventoryEvent {
 
 	private static final HandlerList HANDLERS = new HandlerList();
 
@@ -16,11 +21,14 @@ public class DragInventoryDragAndDropInventoryEvent extends Event implements Can
 	private InventoryDragEvent dropEvent;
 
 	private boolean isCancelled;
+	
+	private PropertyChangeSupport propertyChangeSupport;
 
 	public DragInventoryDragAndDropInventoryEvent(InventoryClickEvent startDragEvent, InventoryDragEvent dropEvent) {
 		this.startDragEvent = startDragEvent;
 		this.dropEvent = dropEvent;
 		this.isCancelled = false;
+		this.propertyChangeSupport = new PropertyChangeSupport(this);
 	}
 
 	public static HandlerList getHandlerList() {
@@ -51,7 +59,22 @@ public class DragInventoryDragAndDropInventoryEvent extends Event implements Can
 
 	@Override
 	public void setCancelled(boolean cancel) {
+		if (this.isCancelled == cancel) {
+			return;
+		}
 		this.isCancelled = cancel;
+		dropEvent.setCancelled(cancel);
+		propertyChangeSupport.firePropertyChange("cancel", !this.isCancelled, this.isCancelled);
+	}
+
+	@Override
+	public void addObserver(PropertyChangeListener observer) {
+		propertyChangeSupport.addPropertyChangeListener(observer);
+	}
+
+	@Override
+	public void removeObserver(PropertyChangeListener observer) {
+		propertyChangeSupport.removePropertyChangeListener(observer);
 	}
 
 }

@@ -2,6 +2,7 @@ drlibs\services\events\callers\inventory\DragAndDropInventoryEventCaller.class
 drlibs\common\plugin\permissions\PermissionsPlugin.class
 drlibs\common\plugin\permissions\functions\PermissionsFunctions.class
 drlibs\utils\functions\InventoriesUtils$1.class
+drlibs\common\general\interfaces\PropertyChangeObservable.class
 drlibs\utils\parsers\ItemStackParser.class
 drlibs\common\plugin\permissions\functions\LuckPermsFunctions.class
 drlibs\common\commands\RootCommand.class
@@ -53,6 +54,7 @@ drlibs\common\files\FileConfigurationsLoader.class
 drlibs\services\events\callers\inventory\moveitemtootherinventory\Logic.class
 drlibs\utils\messages\MessagesGroup.class
 drlibs\services\events\callers\inventory\ItemSlotSwapEventCaller.class
+drlibs\events\inventory\DragAndDropInventoryEvent.class
 drlibs\input\ChatPlayerInput$1.class
 drlibs\common\commands\HelpCommand.class
 drlibs\services\events\callers\inventory\moveitemtootherinventory\Logic$1.class
