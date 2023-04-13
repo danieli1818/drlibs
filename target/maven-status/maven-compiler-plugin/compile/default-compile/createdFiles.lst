@@ -1,5 +1,7 @@
 drlibs\services\events\callers\inventory\DragAndDropInventoryEventCaller.class
 drlibs\common\plugin\permissions\PermissionsPlugin.class
+drlibs\utils\files\FilesUtils.class
+drlibs\common\commands\helpers\arguments\flags\BooleanFlagData.class
 drlibs\common\plugin\permissions\functions\PermissionsFunctions.class
 drlibs\utils\functions\InventoriesUtils$1.class
 drlibs\common\general\interfaces\PropertyChangeObservable.class
@@ -15,6 +17,7 @@ drlibs\services\events\callers\inventory\moveitemtootherinventory\MoveItemToOthe
 drlibs\items\ItemStackBuilder.class
 drlibs\common\files\FileConfigurationsUtils.class
 drlibs\events\inventory\NormalDragAndDropInventoryEvent.class
+drlibs\common\commands\helpers\arguments\flags\FlagData.class
 drlibs\services\events\callers\inventory\moveitemtootherinventory\SlotsProcessor$1.class
 drlibs\utils\reloader\ReloaderManager.class
 drlibs\utils\reloader\Reloadable.class
@@ -28,12 +31,14 @@ drlibs\utils\messages\MessagesStorage.class
 drlibs\common\plugin\permissions\BasePermissionsPlugin.class
 drlibs\services\events\callers\inventory\moveitemtootherinventory\CraftingMoveLogic.class
 drlibs\events\inventory\ItemSlotSwapEvent.class
+drlibs\common\commands\helpers\arguments\ArgumentsFlagsHelper.class
 drlibs\common\commands\BaseCommand.class
 drlibs\input\ChatPlayerInput$2.class
 drlibs\common\commands\CommandTransformer.class
 drlibs\common\plugin\MessagesPlugin.class
 drlibs\events\inventory\DragInventoryDragAndDropInventoryEvent.class
 drlibs\exceptions\parse\ParseException.class
+drlibs\common\commands\helpers\arguments\flags\ValueFlagData.class
 drlibs\events\inventory\moveitemtootherinventory\MoveItemToOtherInventoryEvent.class
 drlibs\common\commands\AdvancedCommand.class
 drlibs\utils\functions\ItemsUtils$ArmorType.class
@@ -46,11 +51,14 @@ drlibs\common\commands\ConsumerSubCommand.class
 drlibs\common\plugin\exceptions\PluginMissingException.class
 drlibs\common\plugin\LoggerPlugin.class
 drlibs\services\input\InputService.class
+drlibs\utils\functions\MapsUtils.class
 drlibs\services\events\callers\inventory\moveitemtootherinventory\InnerMoveLogic.class
 drlibs\common\plugin\FilesPlugin.class
 drlibs\services\events\callers\inventory\DragAndDropInventoryEventCaller$1.class
+drlibs\utils\datastructures\tuples\Tuple.class
 drlibs\services\events\callers\inventory\moveitemtootherinventory\InnerMoveLogic$1.class
 drlibs\common\files\FileConfigurationsLoader.class
+drlibs\utils\functions\ParsingUtils.class
 drlibs\services\events\callers\inventory\moveitemtootherinventory\Logic.class
 drlibs\utils\messages\MessagesGroup.class
 drlibs\services\events\callers\inventory\ItemSlotSwapEventCaller.class
@@ -58,6 +66,7 @@ drlibs\events\inventory\DragAndDropInventoryEvent.class
 drlibs\input\ChatPlayerInput$1.class
 drlibs\common\commands\HelpCommand.class
 drlibs\services\events\callers\inventory\moveitemtootherinventory\Logic$1.class
+drlibs\common\commands\helpers\arguments\flags\BaseFlagData.class
 drlibs\input\PlayerInput.class
 drlibs\common\commands\ConsumerRootCommand.class
 drlibs\utils\reloader\ReloadFileData.class

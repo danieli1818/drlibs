@@ -12,14 +12,15 @@ public class ConsumerSubCommand extends SubCommand implements AdvancedCommand {
 	Consumer<CommandSender> consumer;
 
 	public ConsumerSubCommand(MessagesPlugin plugin, Consumer<CommandSender> consumer, AdvancedCommand fatherCommand,
-			String description, String permission) {
-		super(plugin, fatherCommand, description, permission);
+			String command, String description, String permission) {
+		super(plugin, fatherCommand, command, description, permission);
 		this.consumer = consumer;
 	}
 
 	public ConsumerSubCommand(MessagesPlugin plugin, Consumer<CommandSender> consumer, AdvancedCommand fatherCommand,
-			String description, String permission, int numOfSubCommandsPerHelpPage) throws IllegalArgumentException {
-		super(plugin, fatherCommand, description, permission, numOfSubCommandsPerHelpPage);
+			String command, String description, String permission, int numOfSubCommandsPerHelpPage)
+			throws IllegalArgumentException {
+		super(plugin, fatherCommand, command, description, permission, numOfSubCommandsPerHelpPage);
 		this.consumer = consumer;
 	}
 

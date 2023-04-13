@@ -51,7 +51,7 @@ public class FileConfigurationsLoader {
 	}
 	
 	public boolean loadFileConfiguration(String filePath) {
-		return loadFileConfiguration(filePath, true);
+		return loadFileConfiguration(filePath, false);
 	}
 	
 	public boolean loadFileConfiguration(String filePath, boolean createPath) {
@@ -72,10 +72,16 @@ public class FileConfigurationsLoader {
 					getPluginLogger().log(Level.SEVERE, "Couldn't save file at: " + filePath + " with its resource", e);
 					return false;
 				}
+			} else {
+				try {
+					file.createNewFile();
+				} catch (IOException e) {
+					getPluginLogger().log(Level.SEVERE, "Couldn't create file: " + filePath + "!");
+				}
 			}
 		}
 		if (!file.exists() || !file.isFile()) {
-			getPluginLogger().log(Level.SEVERE, "File at: " + filePath + " doesn't exist!");
+			getPluginLogger().log(Level.SEVERE, "File at: " + file.getAbsolutePath() + " doesn't exist!");
 			return false;
 		}
 		FileConfiguration fileConfiguration = new YamlConfiguration();
@@ -103,7 +109,11 @@ public class FileConfigurationsLoader {
 		return true;
 	}
 	
-	private String getAbsolutePath(String relativePath) {
+	public String getRelativePath(String absolutePath) {
+		return plugin.getDataFolder().toURI().relativize(new File(absolutePath).toURI()).getPath();
+	}
+	
+	public String getAbsolutePath(String relativePath) {
 		return plugin.getDataFolder().getAbsolutePath() + File.separator + relativePath;
 	}
 	

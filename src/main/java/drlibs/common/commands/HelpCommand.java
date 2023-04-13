@@ -173,4 +173,9 @@ public class HelpCommand implements AdvancedCommand {
 		return command.getPlayerCommandMessageID();
 	}
 
+	@Override
+	public String getCommandPrefix() {
+		return command.getCommandPrefix() + " help";
+	}
+
 }

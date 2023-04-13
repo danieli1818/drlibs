@@ -31,6 +31,18 @@ public class FileConfigurationsUtils {
 		return loader.loadFileConfiguration(filePath);
 	}
 	
+	public boolean loadFileConfigurationOrCreate(String filePath) {
+		return loader.loadFileConfiguration(filePath, true, false, false);
+	}
+	
+	public boolean loadFileConfigurationOrDefault(String filePath) {
+		return loader.loadFileConfiguration(filePath, true, true, false);
+	}
+	
+	public boolean loadDefaultFileConfiguration(String filePath) {
+		return loader.loadFileConfiguration(filePath, true, true, true);
+	}
+	
 	public void loadFileConfigurations(Collection<String> filePaths) {
 		for (String filePath : filePaths) {
 			loader.loadFileConfiguration(filePath);
@@ -142,18 +154,26 @@ public class FileConfigurationsUtils {
 		return keysValuesMap;
 	}
 	
-	public void setObject(String filePath, String valuePath, Object value) {
+	public boolean setObject(String filePath, String valuePath, Object value) {
 		FileConfiguration fileConfiguration = getFileConfiguration(filePath);
+		if (fileConfiguration == null) {
+			return false;
+		}
 		fileConfiguration.set(valuePath, value);
+		return true;
 	}
 	
-	public void setSerializable(String filePath, String valuePath, Serializable value) throws IOException {
+	public boolean setSerializable(String filePath, String valuePath, Serializable value) throws IOException {
 		FileConfiguration fileConfiguration = getFileConfiguration(filePath);
+		if (fileConfiguration == null) {
+			return false;
+		}
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 		ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
 		objectOutputStream.writeObject(value);
 		objectOutputStream.close();
 		fileConfiguration.set(valuePath, Base64Coder.encodeLines(outputStream.toByteArray()));
+		return true;
 	}
 	
 	public boolean save(String filePath) {
@@ -162,12 +182,26 @@ public class FileConfigurationsUtils {
 	
 	public boolean hasKey(String filePath, String key) {
 		FileConfiguration fileConfiguration = loader.getFileConfiguration(filePath);
+		if (fileConfiguration == null) {
+			return false;
+		}
 		return fileConfiguration.getKeys(false).contains(key);
 	}
 	
 	public Set<String> getKeys(String filePath) {
 		FileConfiguration fileConfiguration = loader.getFileConfiguration(filePath);
+		if (fileConfiguration == null) {
+			return null;
+		}
 		return fileConfiguration.getKeys(false);
+	}
+	
+	public String getRelativeFilePath(String absoluteFilePath) {
+		return loader.getRelativePath(absoluteFilePath);
+	}
+	
+	public String getAbsoluteFilePath(String relativeFilePath) {
+		return loader.getAbsolutePath(relativeFilePath);
 	}
 	
 	private FileConfiguration getFileConfiguration(String filePath) {

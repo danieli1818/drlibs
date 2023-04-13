@@ -143,7 +143,11 @@ public class ReloaderManager {
 		Set<String> resourceFilenames = new HashSet<>();
 		Set<String> resourceReplaceFilenames = new HashSet<>();
 		for (Reloadable reloadable : reloadables) {
-			for (ReloadFileData reloadFileData : reloadable.getReloadFilenames()) {
+			Collection<ReloadFileData> reloadFileDataCollection = reloadable.getReloadFilenames();
+			if (reloadFileDataCollection == null) {
+				continue;
+			}
+			for (ReloadFileData reloadFileData : reloadFileDataCollection) {
 				if (reloadFileData.shouldLoadResource()) {
 					if (reloadFileData.shouldReplaceFile()) {
 						resourceReplaceFilenames.add(reloadFileData.getFilePath());

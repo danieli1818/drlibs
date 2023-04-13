@@ -13,6 +13,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
 import drlibs.common.plugin.MessagesPlugin;
+import drlibs.utils.functions.MapsUtils;
 
 public abstract class BaseCommand implements AdvancedCommand {
 
@@ -23,24 +24,27 @@ public abstract class BaseCommand implements AdvancedCommand {
 	private Map<String, AdvancedCommand> commands;
 	private Map<String, String> aliases;
 
+	private String command;
 	private String description;
 	private String permission;
 
-	public BaseCommand(MessagesPlugin plugin, String description, String permission) {
+	public BaseCommand(MessagesPlugin plugin, String command, String description, String permission) {
 		this.plugin = plugin;
 		this.commands = new HashMap<>();
 		this.commands.put("help", new HelpCommand(plugin, this, 5));
+		this.command = command;
 		this.description = description;
 		this.permission = permission;
 	}
 
-	public BaseCommand(MessagesPlugin plugin, String description, String permission, int numOfSubCommandsPerHelpPage)
-			throws IllegalArgumentException {
+	public BaseCommand(MessagesPlugin plugin, String command, String description, String permission,
+			int numOfSubCommandsPerHelpPage) throws IllegalArgumentException {
 		if (numOfSubCommandsPerHelpPage <= 0) {
 			throw new IllegalArgumentException("The number of sub commands per help page must be positive!");
 		}
 		this.plugin = plugin;
 		this.commands.put("help", new HelpCommand(plugin, this, numOfSubCommandsPerHelpPage));
+		this.command = command;
 		this.description = description;
 		this.permission = permission;
 	}
@@ -94,7 +98,8 @@ public abstract class BaseCommand implements AdvancedCommand {
 			}
 		} else {
 			if (!sender.hasPermission(getPermission())) {
-				plugin.getMessagesSender().sendTranslatedMessage(getNoPermissionMessageID(), sender);
+				plugin.getMessagesSender().sendTranslatedMessage(getNoPermissionMessageID(), sender,
+						MapsUtils.mapOf("permission", getPermission()));
 			}
 		}
 		return false;
@@ -110,6 +115,14 @@ public abstract class BaseCommand implements AdvancedCommand {
 				if (subCommandID.startsWith(startCommand)) {
 					autocompleteOptions.add(subCommandID);
 				}
+			}
+			break;
+		default:
+			String subCommandStr = args[0];
+			if (getSubCommands().containsKey(subCommandStr)) {
+				AdvancedCommand subCommand = getSubCommands().get(subCommandStr);
+				return subCommand.onTabComplete(sender, new CommandTransformer(subCommandStr, subCommand),
+						subCommandStr, Arrays.copyOfRange(args, 1, args.length));
 			}
 		}
 		return autocompleteOptions;
@@ -129,9 +142,14 @@ public abstract class BaseCommand implements AdvancedCommand {
 	public String getPermission() {
 		return permission;
 	}
-	
+
 	public MessagesPlugin getPlugin() {
 		return plugin;
+	}
+
+	@Override
+	public String getCommandPrefix() {
+		return command;
 	}
 
 }

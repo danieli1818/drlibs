@@ -6,14 +6,15 @@ public abstract class SubCommand extends BaseCommand implements AdvancedCommand 
 
 	private AdvancedCommand fatherCommand;
 
-	public SubCommand(MessagesPlugin plugin, AdvancedCommand fatherCommand, String description, String permission) {
-		super(plugin, description, permission);
+	public SubCommand(MessagesPlugin plugin, AdvancedCommand fatherCommand, String command, String description,
+			String permission) {
+		super(plugin, command, description, permission);
 		this.fatherCommand = fatherCommand;
 	}
 
-	public SubCommand(MessagesPlugin plugin, AdvancedCommand fatherCommand, String description, String permission,
-			int numOfSubCommandsPerHelpPage) {
-		super(plugin, description, permission, numOfSubCommandsPerHelpPage);
+	public SubCommand(MessagesPlugin plugin, AdvancedCommand fatherCommand, String command, String description,
+			String permission, int numOfSubCommandsPerHelpPage) {
+		super(plugin, command, description, permission, numOfSubCommandsPerHelpPage);
 		this.fatherCommand = fatherCommand;
 	}
 
@@ -30,6 +31,11 @@ public abstract class SubCommand extends BaseCommand implements AdvancedCommand 
 	@Override
 	public String getPlayerCommandMessageID() {
 		return fatherCommand.getPlayerCommandMessageID();
+	}
+	
+	@Override
+	public String getCommandPrefix() {
+		return fatherCommand.getCommandPrefix() + " " + super.getCommandPrefix();
 	}
 
 }
