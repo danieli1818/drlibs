@@ -97,7 +97,6 @@ public class DragAndDropInventoryEventCaller extends EventCallerService implemen
 			if (!isEventActionPickup(event)) {
 				return;
 			}
-//			System.out.println("Player started dragging item!" + event.getCurrentItem().getType());
 			setStartDragPlayerEvent(player, event);
 		}
 	}
@@ -146,30 +145,9 @@ public class DragAndDropInventoryEventCaller extends EventCallerService implemen
 				|| action.equals(InventoryAction.PICKUP_ONE) || action.equals(InventoryAction.PICKUP_SOME);
 	}
 
-	private boolean isEventActionPlace(InventoryClickEvent event) {
-		InventoryAction action = event.getAction();
-		return action.equals(InventoryAction.PLACE_ALL) || action.equals(InventoryAction.PLACE_ONE)
-				|| action.equals(InventoryAction.PLACE_SOME);
-	}
-
-	private boolean isEventActionSwap(InventoryClickEvent event) {
-		InventoryAction action = event.getAction();
-		return action.equals(InventoryAction.SWAP_WITH_CURSOR);
-	}
-
-//	@EventHandler(priority = EventPriority.HIGHEST)
-//	public void onInventoryCreativeEvent(InventoryCreativeEvent event) {
-//		printEvent(event);
-//	}
-
 	private boolean isPlayerDraggingItem(Player player) {
-//		System.out.println("Is Player Dragging Item: " + startDragPlayerEvents.containsKey(player));
 		return startDragPlayerEvents.containsKey(player) && player.getItemOnCursor() != null && player.getItemOnCursor().getType() != Material.AIR;
 	}
-
-//	private InventoryClickEvent getStartDragPlayerEvent(Player player) {
-//		return startDragPlayerEvents.get(player);
-//	}
 
 	private void setStartDragPlayerEvent(Player player, InventoryClickEvent event) {
 		startDragPlayerEvents.put(player, event);

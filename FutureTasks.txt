@@ -1,5 +1,0 @@
-Future Tasks:
-1. Change the SlotsEvents class to be outside of the Event in a package for the event
-2. Change the SlotsEvents class to contain previous slots amounts for cases like crafting.
-3. Improve the MoveItemToOtherInventoryEventCaller's structure by separating the logics from it.
-
