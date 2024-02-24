@@ -31,6 +31,14 @@ public class FileConfigurationsUtils {
 		return loader.loadFileConfiguration(filePath);
 	}
 	
+	public boolean loadFileConfiguration(String filePath, boolean loadResource) {
+		return loader.loadFileConfiguration(filePath, true, true, false);
+	}
+	
+	public boolean loadFileConfiguration(String filePath, boolean loadResource, boolean replaceFile) {
+		return loader.loadFileConfiguration(filePath, true, true, true);
+	}
+	
 	public boolean loadFileConfigurationOrCreate(String filePath) {
 		return loader.loadFileConfiguration(filePath, true, false, false);
 	}
