@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
 
+import drlibs.messages.ReloadLogMessagesIDs;
 import drlibs.utils.messages.MessagesStorage;
 import drlibs.utils.reloader.Reloadable;
 import drlibs.utils.reloader.reloadparams.ReloadParams;
@@ -38,17 +39,17 @@ public class PluginLogger implements Reloadable {
 	private Map<String, String> getDefaultMessagesConfig() {
 		return Map.of(
 						// Parse
-						"success_parse_message", "Successfully parsed <source>",
-						"warning_parse_message", "Warning parsing <source> since: <error_message>",
-						"error_parse_load_message", "Error loading <source> since: <error_message>",
-						"error_parse_error_message", "Error parsing <source> since: <error_message>",
-						"error_invalid_parse_result_type_message", "Unknown (<error_type>) parse result type of <source> with the errormessage: <error_message>",
+						ReloadLogMessagesIDs.SUCCESS_PARSE_MESSAGE, "Successfully parsed <source>",
+						ReloadLogMessagesIDs.WARNING_PARSE_MESSAGE, "Warning parsing <source> since: <error_message>",
+						ReloadLogMessagesIDs.ERROR_PARSE_LOAD_MESSAGE, "Error loading <source> since: <error_message>",
+						ReloadLogMessagesIDs.ERROR_PARSE_ERROR_MESSAGE, "Error parsing <source> since: <error_message>",
+						ReloadLogMessagesIDs.ERROR_INVALID_PARSE_RESULT_TYPE_MESSAGE, "Unknown (<error_type>) parse result type of <source> with the errormessage: <error_message>",
 
 						// Post Processing
-						"success_post_processing_message", "Successfully post processed <source>",
-						"warning_post_processing_message", "Warning post processing <source> since: <error_message>",
-						"error_post_processing_message", "Error post processing <source> since: <error_message>",
-						"error_invalid_post_processing_result_type_message", "Unknown (<error_type>) post processing result type of <source> with the errormessage: <error_message>");
+						ReloadLogMessagesIDs.SUCCESS_POST_PROCESSING_MESSAGE, "Successfully post processed <source>",
+						ReloadLogMessagesIDs.WARNING_POST_PROCESSING_MESSAGE, "Warning post processing <source> since: <error_message>",
+						ReloadLogMessagesIDs.ERROR_POST_PROCESSING_MESSAGE, "Error post processing <source> since: <error_message>",
+						ReloadLogMessagesIDs.ERROR_INVALID_POST_PROCESSING_RESULT_TYPE_MESSAGE, "Unknown (<error_type>) post processing result type of <source> with the errormessage: <error_message>");
 	}
 
 	public void log(Level level, String message) {
