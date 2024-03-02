@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>me.danieli1818</groupId>
   <artifactId>drlibs</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
+  <version>1.0.0</version>
   <name>DRLibs</name>
   <description>DRLibs Minecraft plugin for library to develop plugins faster, easier and more efficient</description>
   
