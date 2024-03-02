@@ -1,0 +1,14 @@
+# Logger Config Example
+
+# Parse
+success_parse_message: "Successfully parsed <source>"
+warning_parse_message: "Warning parsing <source> since: <error_message>"
+error_parse_load_message: "Error loading <source> since: <error_message>"
+error_parse_error_message: "Error parsing <source> since: <error_message>"
+error_invalid_parse_result_type_message: "Unknown (<error_type>) parse result type of <source> with the error message: <error_message>"
+
+# Post Processing
+success_post_processing_message: "Successfully post processed <source>"
+warning_post_processing_message: "Warning post processing <source> since: <error_message>"
+error_post_processing_message: "Error post processing <source> since: <error_message>"
+error_invalid_post_processing_result_type_message: "Unknown (<error_type>) post processing result type of <source> with the error message: <error_message>"
