@@ -5,22 +5,22 @@ import java.util.function.Consumer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
-import drlibs.common.plugin.MessagesPlugin;
+import drlibs.common.plugin.PluginParameters;
 
 public class ConsumerSubCommand extends SubCommand implements AdvancedCommand {
 
 	Consumer<CommandSender> consumer;
 
-	public ConsumerSubCommand(MessagesPlugin plugin, Consumer<CommandSender> consumer, AdvancedCommand fatherCommand,
+	public ConsumerSubCommand(PluginParameters pluginParameters, Consumer<CommandSender> consumer, AdvancedCommand fatherCommand,
 			String command, String description, String permission) {
-		super(plugin, fatherCommand, command, description, permission);
+		super(pluginParameters, fatherCommand, command, description, permission);
 		this.consumer = consumer;
 	}
 
-	public ConsumerSubCommand(MessagesPlugin plugin, Consumer<CommandSender> consumer, AdvancedCommand fatherCommand,
+	public ConsumerSubCommand(PluginParameters pluginParameters, Consumer<CommandSender> consumer, AdvancedCommand fatherCommand,
 			String command, String description, String permission, int numOfSubCommandsPerHelpPage)
 			throws IllegalArgumentException {
-		super(plugin, fatherCommand, command, description, permission, numOfSubCommandsPerHelpPage);
+		super(pluginParameters, fatherCommand, command, description, permission, numOfSubCommandsPerHelpPage);
 		this.consumer = consumer;
 	}
 

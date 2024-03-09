@@ -1,20 +1,20 @@
 package drlibs.common.commands;
 
-import drlibs.common.plugin.MessagesPlugin;
+import drlibs.common.plugin.PluginParameters;
 
 public abstract class SubCommand extends BaseCommand implements AdvancedCommand {
 
 	private AdvancedCommand fatherCommand;
 
-	public SubCommand(MessagesPlugin plugin, AdvancedCommand fatherCommand, String command, String description,
+	public SubCommand(PluginParameters pluginParameters, AdvancedCommand fatherCommand, String command, String description,
 			String permission) {
-		super(plugin, command, description, permission);
+		super(pluginParameters, command, description, permission);
 		this.fatherCommand = fatherCommand;
 	}
 
-	public SubCommand(MessagesPlugin plugin, AdvancedCommand fatherCommand, String command, String description,
+	public SubCommand(PluginParameters pluginParameters, AdvancedCommand fatherCommand, String command, String description,
 			String permission, int numOfSubCommandsPerHelpPage) {
-		super(plugin, command, description, permission, numOfSubCommandsPerHelpPage);
+		super(pluginParameters, command, description, permission, numOfSubCommandsPerHelpPage);
 		this.fatherCommand = fatherCommand;
 	}
 

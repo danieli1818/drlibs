@@ -8,20 +8,33 @@ import java.util.logging.Level;
 import org.apache.commons.lang.NullArgumentException;
 import org.bukkit.command.CommandSender;
 
-import drlibs.common.plugin.MessagesPlugin;
+import drlibs.common.plugin.PluginParameters;
+import drlibs.utils.log.PluginLogger;
+import drlibs.utils.messages.MessagesSender;
 
 public class HelpCommand implements AdvancedCommand {
 
 	private static final String ERROR_PAGE_INDEX_OUT_OF_BOUNDS = "error_page_index_out_of_bounds";
-	private MessagesPlugin plugin;
+	private MessagesSender messagesSender;
+	private PluginLogger pluginLogger;
 	private AdvancedCommand command;
 	private int numOfSubCommandsPerHelpPage;
 
-	public HelpCommand(MessagesPlugin plugin, AdvancedCommand command, int numOfSubCommandsPerHelpPage) throws NullArgumentException {
+	public HelpCommand(PluginParameters pluginParameters, AdvancedCommand command, int numOfSubCommandsPerHelpPage) throws NullArgumentException {
 		if (command == null) {
 			throw new NullArgumentException("command");
 		}
-		this.plugin = plugin;
+		if (pluginParameters == null) {
+			throw new NullArgumentException("pluginParameters");
+		}
+		pluginLogger = pluginParameters.getPluginLogger();
+		if (pluginLogger == null) {
+			throw new NullArgumentException("pluginLogger");
+		}
+		messagesSender = pluginParameters.getMessagesSender();
+		if (messagesSender == null) {
+			throw new NullArgumentException("messagesSender");
+		}
 		this.command = command;
 		this.numOfSubCommandsPerHelpPage = numOfSubCommandsPerHelpPage;
 	}
@@ -33,15 +46,15 @@ public class HelpCommand implements AdvancedCommand {
 	public void sendHelp(CommandSender sender, int page) {
 		page -= 1;
 		if (page < 0) {
-			plugin.getMessagesSender().sendTranslatedMessage(ERROR_PAGE_INDEX_OUT_OF_BOUNDS, sender);
-			plugin.getPluginLogger().logTranslated(Level.INFO, ERROR_PAGE_INDEX_OUT_OF_BOUNDS);
+			messagesSender.sendTranslatedMessage(ERROR_PAGE_INDEX_OUT_OF_BOUNDS, sender);
+			pluginLogger.logTranslated(Level.INFO, ERROR_PAGE_INDEX_OUT_OF_BOUNDS);
 			return;
 		}
 		List<String> subCommands = getOrderedSubCommandsIDs().subList(getNumOfSubCommandsPerHelpPage() * page,
 				Math.min(getNumOfSubCommands(), getNumOfSubCommandsPerHelpPage() * (page + 1)));
 		Map<String, AdvancedCommand> subCommandsMap = command.getSubCommands();
 		for (String subCommandID : subCommands) {
-			plugin.getMessagesSender().sendMessage(subCommandID + " - " + subCommandsMap.get(subCommandID).getDescription(), sender);
+			messagesSender.sendMessage(subCommandID + " - " + subCommandsMap.get(subCommandID).getDescription(), sender);
 		}
 	}
 
@@ -67,7 +80,7 @@ public class HelpCommand implements AdvancedCommand {
 	@Override
 	public boolean onCommand(CommandSender sender, org.bukkit.command.Command command, String label, String[] args) {
 		if (!sender.hasPermission(getPermission())) {
-			plugin.getMessagesSender()
+			messagesSender
 					.sendErrorMessage(getNoPermissionMessageID().replace("<PERMISSION>", getPermission()), sender);
 		}
 		switch (args.length) {
@@ -78,19 +91,19 @@ public class HelpCommand implements AdvancedCommand {
 			try {
 				int pageNum = Integer.parseInt(args[0]) - 1;
 				if (pageNum < 0 || pageNum >= getNumOfHelpPages()) {
-					plugin.getMessagesSender().sendErrorMessage(getInvalidCommandMessageID(), sender);
+					messagesSender.sendErrorMessage(getInvalidCommandMessageID(), sender);
 					return false;
 				}
 				sendHelp(sender, pageNum);
 			} catch (NumberFormatException e) {
 				if (getInvalidCommandMessageID() != null) {
-					plugin.getMessagesSender().sendErrorMessage(getInvalidCommandMessageID(), sender);
+					messagesSender.sendErrorMessage(getInvalidCommandMessageID(), sender);
 					return false;
 				}
 			}
 			break;
 		default:
-			plugin.getMessagesSender().sendErrorMessage(getInvalidCommandMessageID(), sender);
+			messagesSender.sendErrorMessage(getInvalidCommandMessageID(), sender);
 			return false;
 		}
 		return true;

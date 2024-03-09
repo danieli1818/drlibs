@@ -12,14 +12,15 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
-import drlibs.common.plugin.MessagesPlugin;
+import drlibs.common.plugin.PluginParameters;
 import drlibs.utils.functions.MapsUtils;
 
 public abstract class BaseCommand implements AdvancedCommand {
 
 	private static final String NULL_SUB_COMMAND_ID = "null_sub_command_id";
+	private static final int DEFAULT_NUM_OF_SUB_COMMANDS_PER_HELP_PAGE = 5;
 
-	private MessagesPlugin plugin;
+	private PluginParameters pluginParameters;
 
 	private Map<String, AdvancedCommand> commands;
 	private Map<String, String> aliases;
@@ -28,22 +29,18 @@ public abstract class BaseCommand implements AdvancedCommand {
 	private String description;
 	private String permission;
 
-	public BaseCommand(MessagesPlugin plugin, String command, String description, String permission) {
-		this.plugin = plugin;
-		this.commands = new HashMap<>();
-		this.commands.put("help", new HelpCommand(plugin, this, 5));
-		this.command = command;
-		this.description = description;
-		this.permission = permission;
+	public BaseCommand(PluginParameters pluginParameters, String command, String description, String permission) {
+		this(pluginParameters, command, description, permission, DEFAULT_NUM_OF_SUB_COMMANDS_PER_HELP_PAGE);
 	}
 
-	public BaseCommand(MessagesPlugin plugin, String command, String description, String permission,
+	public BaseCommand(PluginParameters pluginParameters, String command, String description, String permission,
 			int numOfSubCommandsPerHelpPage) throws IllegalArgumentException {
 		if (numOfSubCommandsPerHelpPage <= 0) {
 			throw new IllegalArgumentException("The number of sub commands per help page must be positive!");
 		}
-		this.plugin = plugin;
-		this.commands.put("help", new HelpCommand(plugin, this, numOfSubCommandsPerHelpPage));
+		this.pluginParameters = pluginParameters;
+		this.commands = new HashMap<>();
+		this.commands.put("help", new HelpCommand(pluginParameters, this, numOfSubCommandsPerHelpPage));
 		this.command = command;
 		this.description = description;
 		this.permission = permission;
@@ -98,8 +95,10 @@ public abstract class BaseCommand implements AdvancedCommand {
 			}
 		} else {
 			if (!sender.hasPermission(getPermission())) {
-				plugin.getMessagesSender().sendTranslatedMessage(getNoPermissionMessageID(), sender,
-						MapsUtils.mapOf("permission", getPermission()));
+				runIfMessagesSenderExists(() -> {
+					pluginParameters.getMessagesSender().sendTranslatedMessage(getNoPermissionMessageID(), sender,
+							MapsUtils.mapOf("permission", getPermission()));
+				});
 			}
 		}
 		return false;
@@ -143,13 +142,32 @@ public abstract class BaseCommand implements AdvancedCommand {
 		return permission;
 	}
 
-	public MessagesPlugin getPlugin() {
-		return plugin;
-	}
-
 	@Override
 	public String getCommandPrefix() {
 		return command;
+	}
+	
+	/**
+	 * This function runs the runnable if the messages sender isn't null.
+	 * It returns whether it ran it.
+	 * Used to send messages safely.
+	 * @param runnable The runnable to run.
+	 * @return Whether the runnable ran (The messages sender isn't null)
+	 */
+	protected boolean runIfMessagesSenderExists(Runnable runnable) {
+		if (pluginParameters.getMessagesSender() == null) {
+			return false;
+		}
+		runnable.run();
+		return true;
+	}
+	
+	/**
+	 * This function returns the plugin parameters of the command.
+	 * @return The plugin parameters of the command.
+	 */
+	protected PluginParameters getPluginParameters() {
+		return pluginParameters;
 	}
 
 }
