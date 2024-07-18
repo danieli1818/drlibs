@@ -12,7 +12,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
-import drlibs.common.plugin.PluginParameters;
+import drlibs.common.plugin.PluginProperties;
 import drlibs.utils.functions.MapsUtils;
 
 public abstract class BaseCommand implements AdvancedCommand {
@@ -20,7 +20,7 @@ public abstract class BaseCommand implements AdvancedCommand {
 	private static final String NULL_SUB_COMMAND_ID = "null_sub_command_id";
 	private static final int DEFAULT_NUM_OF_SUB_COMMANDS_PER_HELP_PAGE = 5;
 
-	private PluginParameters pluginParameters;
+	private PluginProperties pluginParameters;
 
 	private Map<String, AdvancedCommand> commands;
 	private Map<String, String> aliases;
@@ -29,11 +29,11 @@ public abstract class BaseCommand implements AdvancedCommand {
 	private String description;
 	private String permission;
 
-	public BaseCommand(PluginParameters pluginParameters, String command, String description, String permission) {
+	public BaseCommand(PluginProperties pluginParameters, String command, String description, String permission) {
 		this(pluginParameters, command, description, permission, DEFAULT_NUM_OF_SUB_COMMANDS_PER_HELP_PAGE);
 	}
 
-	public BaseCommand(PluginParameters pluginParameters, String command, String description, String permission,
+	public BaseCommand(PluginProperties pluginParameters, String command, String description, String permission,
 			int numOfSubCommandsPerHelpPage) throws IllegalArgumentException {
 		if (numOfSubCommandsPerHelpPage <= 0) {
 			throw new IllegalArgumentException("The number of sub commands per help page must be positive!");
@@ -166,7 +166,7 @@ public abstract class BaseCommand implements AdvancedCommand {
 	 * This function returns the plugin parameters of the command.
 	 * @return The plugin parameters of the command.
 	 */
-	protected PluginParameters getPluginParameters() {
+	protected PluginProperties getPluginParameters() {
 		return pluginParameters;
 	}
 

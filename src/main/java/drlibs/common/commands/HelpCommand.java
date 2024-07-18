@@ -8,7 +8,7 @@ import java.util.logging.Level;
 import org.apache.commons.lang.NullArgumentException;
 import org.bukkit.command.CommandSender;
 
-import drlibs.common.plugin.PluginParameters;
+import drlibs.common.plugin.PluginProperties;
 import drlibs.utils.log.PluginLogger;
 import drlibs.utils.messages.MessagesSender;
 
@@ -20,7 +20,7 @@ public class HelpCommand implements AdvancedCommand {
 	private AdvancedCommand command;
 	private int numOfSubCommandsPerHelpPage;
 
-	public HelpCommand(PluginParameters pluginParameters, AdvancedCommand command, int numOfSubCommandsPerHelpPage) throws NullArgumentException {
+	public HelpCommand(PluginProperties pluginParameters, AdvancedCommand command, int numOfSubCommandsPerHelpPage) throws NullArgumentException {
 		if (command == null) {
 			throw new NullArgumentException("command");
 		}

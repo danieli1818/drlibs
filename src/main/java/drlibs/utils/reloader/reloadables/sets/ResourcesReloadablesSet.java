@@ -1,8 +1,9 @@
 package drlibs.utils.reloader.reloadables.sets;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Set;
 import java.util.function.Function;
@@ -13,32 +14,38 @@ import drlibs.utils.reloader.ReloadableUtils;
 
 public class ResourcesReloadablesSet extends BaseReloadablesSet {
 
-	private File pluginDirPath;
-	private Function<String, File> getResourceFile;
+	private Path pluginDirPath;
+	private Function<Path, Path> getResourcePath;
 	
-	public ResourcesReloadablesSet(File pluginDirPath, Function<String, File> getResourceFile) {
+	public ResourcesReloadablesSet(Path pluginDirPath, Function<Path, Path> getResourcePath) {
 		super();
 		this.pluginDirPath = pluginDirPath;
-		this.getResourceFile = getResourceFile;
+		this.getResourcePath = getResourcePath;
 	}
 	
 	@Override
 	public void onPreReload() {
 		for (String filePath : getReloadablesFilePaths()) {
-			File file = new File(filePath);
-			if (file.exists()) {
-				continue;
+			Path path = Paths.get(filePath);
+			Path relativePath = null;
+			if (path.isAbsolute()) {
+				if (!path.startsWith(pluginDirPath)) {
+					continue; // Not a sub file of plugin dir path
+				}
+				relativePath = pluginDirPath.relativize(path);
+			} else {
+				relativePath = path;
+				path = pluginDirPath.resolve(path);
 			}
-			String relativeFilePath = pluginDirPath.toURI().relativize(file.toURI()).getPath();
-			if (filePath != pluginDirPath.getAbsolutePath().concat(relativeFilePath)) {
-				continue;
+			if (Files.exists(path)) {
+				continue; // Skip existing files
 			}
-			File resourceFile = getResourceFile.apply(relativeFilePath);
-			if (!resourceFile.exists()) {
+			Path resourcePath = getResourcePath.apply(relativePath);
+			if (!Files.exists(resourcePath)) {
 				continue;
 			}
 			try {
-				Files.copy(resourceFile.toPath(), file.toPath(), StandardCopyOption.REPLACE_EXISTING);
+				Files.copy(resourcePath, path, StandardCopyOption.REPLACE_EXISTING);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

@@ -1,5 +1,6 @@
 name: DRLibs
-version: ${project.version}
+version: 2.0.0-SNAPSHOT
 main: drlibs.DRLibs
 authors: [DanielRottner]
 description: DRLibs Plugin library for plugins.
+api: '1.12'

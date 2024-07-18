@@ -8,14 +8,14 @@ import javax.annotation.Nonnull;
 import org.apache.commons.lang.NullArgumentException;
 import org.bukkit.command.CommandSender;
 
-import drlibs.common.plugin.LoggerPlugin;
+import drlibs.common.plugin.PluginProperties;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.TextComponent;
 
 public class MessagesSender {
 
-	LoggerPlugin plugin;
+	private PluginProperties pluginParameters;
 
 	private String prefix;
 
@@ -23,11 +23,11 @@ public class MessagesSender {
 
 	private MessagesStorage messagesStorage;
 
-	public MessagesSender(LoggerPlugin plugin, String prefix, String errorPrefix, MessagesStorage messagesStorage) {
-		if (plugin == null) {
-			throw new NullArgumentException("plugin");
+	public MessagesSender(PluginProperties pluginParameters, String prefix, String errorPrefix, MessagesStorage messagesStorage) {
+		if (pluginParameters == null) {
+			throw new NullArgumentException("pluginParameters");
 		}
-		this.plugin = plugin;
+		this.pluginParameters = pluginParameters;
 		if (prefix == null) {
 			prefix = "";
 		}
@@ -39,24 +39,24 @@ public class MessagesSender {
 		this.messagesStorage = messagesStorage;
 	}
 
-	public MessagesSender(LoggerPlugin plugin, String prefix, String errorPrefix) {
-		this(plugin, prefix, errorPrefix, null);
+	public MessagesSender(PluginProperties pluginParameters, String prefix, String errorPrefix) {
+		this(pluginParameters, prefix, errorPrefix, null);
 	}
 
-	public MessagesSender(LoggerPlugin plugin, String prefix, MessagesStorage messagesStorage) {
-		this(plugin, prefix, null, messagesStorage);
+	public MessagesSender(PluginProperties pluginParameters, String prefix, MessagesStorage messagesStorage) {
+		this(pluginParameters, prefix, null, messagesStorage);
 	}
 
-	public MessagesSender(LoggerPlugin plugin, String prefix) {
-		this(plugin, prefix, (String) null);
+	public MessagesSender(PluginProperties pluginParameters, String prefix) {
+		this(pluginParameters, prefix, (String) null);
 	}
 
-	public MessagesSender(LoggerPlugin plugin, MessagesStorage messagesStorage) {
-		this(plugin, null, null, messagesStorage);
+	public MessagesSender(PluginProperties pluginParameters, MessagesStorage messagesStorage) {
+		this(pluginParameters, null, null, messagesStorage);
 	}
 
-	public MessagesSender(LoggerPlugin plugin) {
-		this(plugin, (String) null);
+	public MessagesSender(PluginProperties pluginParameters) {
+		this(pluginParameters, (String) null);
 	}
 
 	public void sendMessage(String message, CommandSender sender) {
@@ -80,14 +80,14 @@ public class MessagesSender {
 
 	public boolean sendTranslatedMessage(String messageID, CommandSender sender) {
 		if (messagesStorage == null) {
-			plugin.getPluginLogger().log(Level.SEVERE,
+			pluginParameters.getPluginLogger().log(Level.SEVERE,
 					"There has been a call to translate a message without translation file existing!",
 					new IllegalStateException());
 			return false;
 		}
 		String message = messagesStorage.getMessage(messageID);
 		if (message == null) {
-			plugin.getPluginLogger().log(Level.SEVERE, "Couldn't find a message with the message ID: " + messageID,
+			pluginParameters.getPluginLogger().log(Level.SEVERE, "Couldn't find a message with the message ID: " + messageID,
 					new IllegalArgumentException());
 			return false;
 		}
@@ -98,14 +98,14 @@ public class MessagesSender {
 	public boolean sendTranslatedMessage(String messageID, CommandSender sender, Map<String, String> variablesMap,
 			String variablesPrefix, String variablesSuffix) {
 		if (messagesStorage == null) {
-			plugin.getPluginLogger().log(Level.SEVERE,
+			pluginParameters.getPluginLogger().log(Level.SEVERE,
 					"There has been a call to translate a message without translation file existing!",
 					new IllegalStateException());
 			return false;
 		}
 		String message = messagesStorage.getMessage(messageID);
 		if (message == null) {
-			plugin.getPluginLogger().log(Level.SEVERE, "Couldn't find a message with the message ID: " + messageID,
+			pluginParameters.getPluginLogger().log(Level.SEVERE, "Couldn't find a message with the message ID: " + messageID,
 					new IllegalArgumentException());
 			return false;
 		}

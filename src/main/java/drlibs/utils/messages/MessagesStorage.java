@@ -1,5 +1,6 @@
 package drlibs.utils.messages;
 
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,25 +21,25 @@ import drlibs.utils.reloader.results.base.BasePostProcessingResult;
 
 public class MessagesStorage implements Reloadable {
 	
-	private String filesDirPath;
+	private Path filesDirPath;
 	
-	private String configPath;
+	private Path configPath;
 	
 	private Map<String, String> messagesConfigMap;
 	private Map<String, String> defaultMessagesConfigMap;
 	
-	public MessagesStorage(String filesDirPath) {
-		this(filesDirPath, "messages.yml");
+	public MessagesStorage(Path filesDirPath) {
+		this(filesDirPath, Paths.get("messages.yml"));
 	}
 	
-	public MessagesStorage(String filesDirPath, String configFilePath) {
+	public MessagesStorage(Path filesDirPath, Path configFilePath) {
 		this.filesDirPath = filesDirPath;
 		this.configPath = configFilePath;
 		this.messagesConfigMap = new HashMap<>();
 		this.defaultMessagesConfigMap = new HashMap<>();
 	}
 	
-	public MessagesStorage setConfigFilename(String filename) {
+	public MessagesStorage setConfigFilename(Path filename) {
 		if (configPath != null && configPath.equals(filename)) {
 			return this;
 		}
@@ -70,7 +71,7 @@ public class MessagesStorage implements Reloadable {
 	public Collection<ReloadParams> getReloadParams() {
 		List<ReloadParams> reloadParams = new ArrayList<>();
 		ParsersListLoadParser parsersListLoadParser = new ParsersListLoadParser(Arrays.asList(new FileLoadParser(), new YamlLoadParser()));
-		reloadParams.add(new BaseReloadParams(Paths.get(filesDirPath, configPath).toString(), parsersListLoadParser, (ParseResult parseResult) -> loadMessagesConfig(parseResult.getResult())));
+		reloadParams.add(new BaseReloadParams(filesDirPath.resolve(configPath).toAbsolutePath().toString(), parsersListLoadParser, (ParseResult parseResult) -> loadMessagesConfig(parseResult.getResult())));
 		return reloadParams;
 	}
 	

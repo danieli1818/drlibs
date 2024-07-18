@@ -1,5 +1,7 @@
 package drlibs.utils.log;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.Map;
 import java.util.logging.Level;
@@ -15,41 +17,49 @@ import drlibs.utils.reloader.reloadparams.ReloadParams;
 // TODO Statically save default log transforms for the case of error in loading the logger
 public class PluginLogger implements Reloadable {
 
+	public static final String MESSAGE_IDENTIFIER = "<MESSAGE>"; // The message identifier which we replace with the log
+																	// message
+
 	private String logFormat;
 
 	private Logger logger;
 
 	private MessagesStorage messagesStorage;
 
-	public PluginLogger(String filesDirPath) {
-		this("<message>", filesDirPath, "log_messages.yml");
+	public PluginLogger(String pluginID, Path filesDirPath) {
+		this(new StringBuilder().append("[").append(pluginID).append("]").append(MESSAGE_IDENTIFIER).toString(),
+				filesDirPath, Paths.get("log_messages.yml"));
 	}
 
-	public PluginLogger(String logFormat, String filesDirPath) {
-		this(logFormat, filesDirPath, "log_messages.yml");
+	public PluginLogger(Path filesDirPath) {
+		this("<message>", filesDirPath, Paths.get("log_messages.yml"));
 	}
 
-	public PluginLogger(String logFormat, String filesDirPath, String messagesConfigRelativeFilePath) {
+	public PluginLogger(String logFormat, Path filesDirPath, Path messagesConfigRelativeFilePath) {
 		this.logFormat = logFormat;
 		this.logger = Bukkit.getLogger();
 		this.messagesStorage = new MessagesStorage(filesDirPath, messagesConfigRelativeFilePath);
 		this.messagesStorage.setDefaultMessagesConfigMap(getDefaultMessagesConfig());
 	}
-	
+
 	private Map<String, String> getDefaultMessagesConfig() {
 		return Map.of(
-						// Parse
-						ReloadLogMessagesIDs.SUCCESS_PARSE_MESSAGE, "Successfully parsed <source>",
-						ReloadLogMessagesIDs.WARNING_PARSE_MESSAGE, "Warning parsing <source> since: <error_message>",
-						ReloadLogMessagesIDs.ERROR_PARSE_LOAD_MESSAGE, "Error loading <source> since: <error_message>",
-						ReloadLogMessagesIDs.ERROR_PARSE_ERROR_MESSAGE, "Error parsing <source> since: <error_message>",
-						ReloadLogMessagesIDs.ERROR_INVALID_PARSE_RESULT_TYPE_MESSAGE, "Unknown (<error_type>) parse result type of <source> with the errormessage: <error_message>",
+				// Parse
+				ReloadLogMessagesIDs.SUCCESS_PARSE_MESSAGE, "Successfully parsed <source>",
+				ReloadLogMessagesIDs.WARNING_PARSE_MESSAGE, "Warning parsing <source> since: <error_message>",
+				ReloadLogMessagesIDs.ERROR_PARSE_LOAD_MESSAGE, "Error loading <source> since: <error_message>",
+				ReloadLogMessagesIDs.ERROR_PARSE_ERROR_MESSAGE, "Error parsing <source> since: <error_message>",
+				ReloadLogMessagesIDs.ERROR_INVALID_PARSE_RESULT_TYPE_MESSAGE,
+				"Unknown (<error_type>) parse result type of <source> with the errormessage: <error_message>",
 
-						// Post Processing
-						ReloadLogMessagesIDs.SUCCESS_POST_PROCESSING_MESSAGE, "Successfully post processed <source>",
-						ReloadLogMessagesIDs.WARNING_POST_PROCESSING_MESSAGE, "Warning post processing <source> since: <error_message>",
-						ReloadLogMessagesIDs.ERROR_POST_PROCESSING_MESSAGE, "Error post processing <source> since: <error_message>",
-						ReloadLogMessagesIDs.ERROR_INVALID_POST_PROCESSING_RESULT_TYPE_MESSAGE, "Unknown (<error_type>) post processing result type of <source> with the errormessage: <error_message>");
+				// Post Processing
+				ReloadLogMessagesIDs.SUCCESS_POST_PROCESSING_MESSAGE, "Successfully post processed <source>",
+				ReloadLogMessagesIDs.WARNING_POST_PROCESSING_MESSAGE,
+				"Warning post processing <source> since: <error_message>",
+				ReloadLogMessagesIDs.ERROR_POST_PROCESSING_MESSAGE,
+				"Error post processing <source> since: <error_message>",
+				ReloadLogMessagesIDs.ERROR_INVALID_POST_PROCESSING_RESULT_TYPE_MESSAGE,
+				"Unknown (<error_type>) post processing result type of <source> with the errormessage: <error_message>");
 	}
 
 	public void log(Level level, String message) {

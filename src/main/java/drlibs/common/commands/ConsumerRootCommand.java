@@ -5,13 +5,13 @@ import java.util.function.Consumer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
-import drlibs.common.plugin.PluginParameters;
+import drlibs.common.plugin.PluginProperties;
 
 public class ConsumerRootCommand extends RootCommand implements AdvancedCommand {
 
 	Consumer<CommandSender> consumer;
 
-	public ConsumerRootCommand(PluginParameters pluginParameters, Consumer<CommandSender> consumer, String command,
+	public ConsumerRootCommand(PluginProperties pluginParameters, Consumer<CommandSender> consumer, String command,
 			String description, String permission, String invalidCommandMessageID, String noPermissionMessageID,
 			String playerCommandMessageID) {
 		super(pluginParameters, command, description, permission, invalidCommandMessageID, noPermissionMessageID,
@@ -19,7 +19,7 @@ public class ConsumerRootCommand extends RootCommand implements AdvancedCommand 
 		this.consumer = consumer;
 	}
 
-	public ConsumerRootCommand(PluginParameters pluginParameters, Consumer<CommandSender> consumer, String command,
+	public ConsumerRootCommand(PluginProperties pluginParameters, Consumer<CommandSender> consumer, String command,
 			String description, String permission, int numOfSubCommandsPerHelpPage, String invalidCommandMessageID,
 			String noPermissionMessageID, String playerCommandMessageID) throws IllegalArgumentException {
 		super(pluginParameters, command, description, permission, numOfSubCommandsPerHelpPage, invalidCommandMessageID,

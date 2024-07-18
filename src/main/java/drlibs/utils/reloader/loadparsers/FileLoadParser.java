@@ -1,8 +1,8 @@
 package drlibs.utils.reloader.loadparsers;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
@@ -40,15 +40,15 @@ public class FileLoadParser implements LoadParser {
 	
 	@Override
 	public ParseResult parse(String filePath) {
-		File file = new File(filePath);
-		if (!file.exists()) {
+		Path path = Paths.get(filePath);
+		if (!Files.exists(path)) {
 			return new BaseParseResult(filePath, ResultType.LOAD_ERROR, errorMessagesTransformer.get(FILE_DOESNT_EXIST_TRANFORM_KEY));
 		}
-		if (!file.isFile()) {
+		if (!Files.isRegularFile(path)) {
 			return new BaseParseResult(filePath, ResultType.LOAD_ERROR, errorMessagesTransformer.get(FILE_ISNT_A_FILE_TRANSFORM_KEY));
 		}
 		try {
-			String fileData = Files.readString(Paths.get(filePath));
+			String fileData = Files.readString(path);
 			return new BaseParseResult(filePath, fileData);
 		} catch (IOException e) {
 			e.printStackTrace();

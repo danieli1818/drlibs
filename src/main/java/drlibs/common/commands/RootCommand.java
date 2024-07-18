@@ -1,6 +1,6 @@
 package drlibs.common.commands;
 
-import drlibs.common.plugin.PluginParameters;
+import drlibs.common.plugin.PluginProperties;
 
 public abstract class RootCommand extends BaseCommand {
 
@@ -8,7 +8,7 @@ public abstract class RootCommand extends BaseCommand {
 	private String noPermissionMessageID;
 	private String playerCommandMessageID;
 
-	public RootCommand(PluginParameters pluginParameters, String command, String description, String permission,
+	public RootCommand(PluginProperties pluginParameters, String command, String description, String permission,
 			String invalidCommandMessageID, String noPermissionMessageID, String playerCommandMessageID) {
 		super(pluginParameters, command, description, permission);
 		this.invalidCommandMessageID = invalidCommandMessageID;
@@ -16,7 +16,7 @@ public abstract class RootCommand extends BaseCommand {
 		this.playerCommandMessageID = playerCommandMessageID;
 	}
 
-	public RootCommand(PluginParameters pluginParameters, String command, String description, String permission,
+	public RootCommand(PluginProperties pluginParameters, String command, String description, String permission,
 			int numOfSubCommandsPerHelpPage, String invalidCommandMessageID, String noPermissionMessageID,
 			String playerCommandMessageID) throws IllegalArgumentException {
 		super(pluginParameters, command, description, permission, numOfSubCommandsPerHelpPage);

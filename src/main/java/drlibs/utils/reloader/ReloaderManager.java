@@ -142,12 +142,12 @@ public class ReloaderManager {
 				if (!loadDataCachedParsedObject.containsKey(loadData)) { // Cached
 					parseResult = reloadParams.getParser().parse(reloadParams.getSource());
 					loadDataCachedParsedObject.put(loadData, parseResult);
+					logParseResult(parseResult);
 					if (parseResult.getResultType() != ResultType.SUCCESS) {
 						reloadResult.addParseResult(parseResult);
 					}
 				}
 				parseResult = loadDataCachedParsedObject.get(loadData);
-				logParseResult(parseResult);
 				if (!ParseResult.SUCCESS_PARSE_RESULT_TYPES.contains(parseResult.getResultType())) {
 					continue;
 				}

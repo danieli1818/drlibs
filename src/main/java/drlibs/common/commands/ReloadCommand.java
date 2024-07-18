@@ -6,7 +6,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import drlibs.common.plugin.PluginParameters;
+import drlibs.common.plugin.PluginProperties;
 import drlibs.messages.BaseCommandsMessagesIDs;
 import drlibs.utils.reloader.ReloaderManager;
 
@@ -14,13 +14,13 @@ public class ReloadCommand extends SubCommand {
 	
 	private ReloaderManager reloaderManager;
 
-	public ReloadCommand(PluginParameters pluginParameters, ReloaderManager reloaderManager, AdvancedCommand fatherCommand, String command, String description,
+	public ReloadCommand(PluginProperties pluginParameters, ReloaderManager reloaderManager, AdvancedCommand fatherCommand, String command, String description,
 			String permission) {
 		super(pluginParameters, fatherCommand, command, description, permission);
 		this.reloaderManager = reloaderManager;
 	}
 
-	public ReloadCommand(PluginParameters pluginParameters, ReloaderManager reloaderManager, AdvancedCommand fatherCommand, String command) {
+	public ReloadCommand(PluginProperties pluginParameters, ReloaderManager reloaderManager, AdvancedCommand fatherCommand, String command) {
 		this(pluginParameters, reloaderManager, fatherCommand, command, "Reloads the plugin's configurations", pluginParameters.getPluginID() + ".reload");
 	}
 
